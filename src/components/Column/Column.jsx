@@ -1,23 +1,28 @@
 import Card from '../Card/Card';
 
-function Column({ title, cardsCount }) {
+function Column({ title, cards }) {
   return (
     <div className="main__column column">
       <div className="column__title">
         <p>{title}</p>
       </div>
+
       <div className="cards">
-        {Array.from({ length: cardsCount }).map((_, index) => (
-          <Card key={index} theme={getRandomTheme()} />
+        
+        {cards.map((card) => (
+          <Card
+            key={card.id}
+            id={card.id}
+            topic={card.topic}
+            title={card.title}
+            date={card.date}
+            status={card.status}
+          />
         ))}
+
       </div>
     </div>
   );
-}
-
-function getRandomTheme() {
-  const themes = ['_orange', '_green', '_purple'];
-  return themes[Math.floor(Math.random() * themes.length)];
 }
 
 export default Column;

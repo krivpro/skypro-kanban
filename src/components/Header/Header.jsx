@@ -1,4 +1,14 @@
+import { useState } from 'react';
+
 function Header() {
+
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+
+  const toggleUserMenu = () => {
+    setIsUserMenuOpen(!isUserMenuOpen);
+  };
+
   return (
     <header className="header">
       <div className="container">
@@ -13,8 +23,17 @@ function Header() {
             <button className="header__btn-main-new _hover01" id="btnMainNew">
               <a href="#popNewCard">Создать новую задачу</a>
             </button>
-            <a href="#user-set-target" className="header__user _hover02">Ivan Ivanov</a>
-            <UserSettings />
+            <a 
+            href="#user-set-target"
+            className='header__user _hover02'
+            onClick={(e) => {
+              e.preventDefault();
+              toggleUserMenu();
+            }}
+            >
+              Ivan Ivanov
+            </a>
+            <UserSettings isOpen={isUserMenuOpen}/>
           </nav>					
         </div>
       </div>			
@@ -22,9 +41,13 @@ function Header() {
   );
 }
 
-function UserSettings() {
+function UserSettings({ isOpen }) {
   return (
-    <div className="header__pop-user-set pop-user-set" id="user-set-target">
+    <div 
+      className="header__pop-user-set pop-user-set"
+      id="user-set-target"
+      style={{ display: isOpen ? 'block' : 'none'}}
+    >
       <p className="pop-user-set__name">Ivan Ivanov</p>
       <p className="pop-user-set__mail">ivan.ivanov@gmail.com</p>
       <div className="pop-user-set__theme">
