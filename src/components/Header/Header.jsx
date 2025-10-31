@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import * as S from './Header.styled'
 
 function Header() {
 
@@ -10,34 +11,34 @@ function Header() {
   };
 
   return (
-    <header className="header">
-      <div className="container">
-        <div className="header__block">
-          <div className="header__logo _show _light">
+    <S.Header>
+      <S.Container>
+        <S.Block>
+          <S.Logo className="_show _light">
             <a href="" target="_self"><img src="images/logo.png" alt="logo"/></a>
-          </div>
-          <div className="header__logo _dark">
+          </S.Logo>
+          <S.Logo className="_dark">
             <a href="" target="_self"><img src="images/logo_dark.png" alt="logo"/></a>
-          </div>
-          <nav className="header__nav">
-            <button className="header__btn-main-new _hover01" id="btnMainNew">
+          </S.Logo>
+          <S.Nav>
+            <S.ButtonMainNew id="btnMainNew">
               <a href="#popNewCard">Создать новую задачу</a>
-            </button>
-            <a 
+            </S.ButtonMainNew>
+            <S.UserLink 
             href="#user-set-target"
-            className='header__user _hover02'
+
             onClick={(e) => {
               e.preventDefault();
               toggleUserMenu();
             }}
             >
               Ivan Ivanov
-            </a>
+            </S.UserLink>
             <UserSettings isOpen={isUserMenuOpen}/>
-          </nav>					
-        </div>
-      </div>			
-    </header>
+          </S.Nav>					
+        </S.Block>
+      </S.Container>			
+    </S.Header>
   );
 }
 

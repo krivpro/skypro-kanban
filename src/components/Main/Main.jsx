@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Column from '../Column/Column';
 import { cardsData } from '../../data';
+import * as S from './Main.styled'
 
 function Main() {
 
@@ -28,10 +29,10 @@ function Main() {
   ];
 
   return (
-    <main className="main">
-      <div className="container">
-        <div className="main__block">
-          <div className="main__content">
+    <S.Main>
+      <S.Container>
+        <S.Block>
+          <S.Content>
             {isLoading ? (
               <div className="loading-container">
                 <p className="loading-text">Данные загружаются</p>
@@ -43,16 +44,16 @@ function Main() {
                 return (
                   <Column
                   key={index}
-                  title={(column.title)}
+                  title={column.title}
                   cards={columnCards}
                   />
                 );
               })
             )}
-          </div>
-        </div>
-      </div>
-    </main>
+          </S.Content>
+        </S.Block>
+      </S.Container>
+    </S.Main>
   );
 }
 

@@ -1,27 +1,26 @@
 import Card from '../Card/Card';
+import * as S from './Column.styled'
 
 function Column({ title, cards }) {
   return (
-    <div className="main__column column">
-      <div className="column__title">
+    <S.ColumnWrap>
+      <S.Title>
         <p>{title}</p>
-      </div>
+      </S.Title>
 
-      <div className="cards">
+      <S.Cards>
         
         {cards.map((card) => (
           <Card
             key={card.id}
-            id={card.id}
             topic={card.topic}
             title={card.title}
             date={card.date}
-            status={card.status}
           />
         ))}
 
-      </div>
-    </div>
+      </S.Cards>
+    </S.ColumnWrap>
   );
 }
 
