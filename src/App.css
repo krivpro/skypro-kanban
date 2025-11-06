@@ -58,6 +58,21 @@ body {
   padding: 0 30px;
 }
 
+.loading-container {
+  width: 100%;
+  height: calc(100vh - 150px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #94A6BE;
+  text-align: center;
+}
+
 ._hover01:hover {
   background-color: #33399b;
 }
@@ -794,6 +809,7 @@ body {
 
 .main {
   width: 100%;
+  height: calc(100vh - 70px);
   background-color: #EAEEF6;
 }
 .main__block {
