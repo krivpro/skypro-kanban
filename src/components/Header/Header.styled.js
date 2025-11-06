@@ -48,7 +48,10 @@ export const ButtonMainNew = styled.button`
   line-height: 1;
   font-weight: 500;
   margin-right: 20px;
-  a { color: #FFFFFF; }
+  a { 
+    color: #FFFFFF; 
+    text-decoration: none;
+  }
   &:hover { background-color: #33399b; }
 `
 

@@ -64,6 +64,13 @@ export const Title = styled.h3`
   line-height: 18px;
   color: #000000;
   margin-bottom: 10px;
+  a {
+    color: #000000;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
 `
 
 export const Content = styled.div`

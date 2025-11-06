@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import * as S from './Card.styled'
 
-function Card({ topic, title, date }) {
+function Card({ id, topic, title, date }) {
   
   const getThemeColors = (topic) => {
     const themeMap = {
@@ -21,18 +22,18 @@ function Card({ topic, title, date }) {
           <S.Theme $colorBg={theme.bg} $colorText={theme.text}>
             <p>{topic}</p>
           </S.Theme>
-          <a href="#popBrowse" target="_self">
+          <Link to={`/task/${id}`}>
             <S.Btn>
               <div></div>
               <div></div>
               <div></div>
             </S.Btn>
-          </a>
+          </Link>
         </S.Group>
         <S.Content>
-          <a href="" target="_blank">
+          <Link to={`/task/${id}`}>
             <S.Title>{title}</S.Title>
-          </a>
+          </Link>
           <S.DateInfo>
             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
               <g clipPath="url(#clip0_1_415)">
