@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import { setAuthToken } from '../services/api';
 
 const AuthContext = createContext(null);
 
@@ -16,7 +17,12 @@ export const AuthProvider = ({ children }) => {
     try {
       const savedUser = localStorage.getItem('user');
       if (savedUser) {
-        return JSON.parse(savedUser);
+        const parsedUser = JSON.parse(savedUser);
+        // Восстанавливаем токен в axios при инициализации
+        if (parsedUser.token) {
+          setAuthToken(parsedUser.token);
+        }
+        return parsedUser;
       }
       return null;
     } catch (error) {
@@ -27,6 +33,14 @@ export const AuthProvider = ({ children }) => {
     }
   });
 
+  useEffect(() => {
+    if (user?.token) {
+      setAuthToken(user.token);
+    } else {
+      setAuthToken(null);
+    }
+  }, [user]);
+
   const login = (userData) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
@@ -35,6 +49,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    setAuthToken(null);
   };
 
   const isAuthenticated = !!user;

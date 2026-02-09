@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header/Header';
+import { createTask } from '../services/tasks';
 import * as S from './AddTask.styled';
 
 function AddTask() {
@@ -10,10 +11,11 @@ function AddTask() {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('Web Design');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const categories = ['Web Design', 'Research', 'Copywriting'];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -22,9 +24,21 @@ function AddTask() {
       return;
     }
 
-    console.log('Новая задача:', { title, description, category });
+    try {
+      setIsLoading(true);
+
+      await createTask({
+        title,
+        description,
+        topic: category,
+      });
 
     navigate('/');
+    } catch (err) {
+      setError(err.message || 'Не удалось создать задачу. Попробуйте ещё раз.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCancel = () => {
@@ -81,7 +95,9 @@ function AddTask() {
               {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
 
               <S.ButtonGroup>
-                <S.ButtonCreate type="submit">Создать задачу</S.ButtonCreate>
+                <S.ButtonCreate type="submit" disabled={isLoading}>
+                  {isLoading ? 'Создаём...' : 'Создать задачу'}
+                </S.ButtonCreate>
                 <S.ButtonCancel type="button" onClick={handleCancel}>
                   Отмена
                 </S.ButtonCancel>

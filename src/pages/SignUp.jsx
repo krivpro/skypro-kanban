@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { registerUser } from '../services/auth';
 import * as S from './SignUp.styled';
 
 function SignUp() {
@@ -12,8 +13,9 @@ function SignUp() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -32,14 +34,31 @@ function SignUp() {
       return;
     }
 
-    const userData = {
-      email: email,
-      name: name,
-    };
+    try {
+      setIsLoading(true);
+
+      // email используется как логин для API
+      const userFromApi = await registerUser({
+        login: email,
+        name,
+        password,
+      });
+
+      const userData = {
+        id: userFromApi.id,
+        name: userFromApi.name,
+        login: userFromApi.login,
+        email: userFromApi.login,
+        token: userFromApi.token,
+      };
 
     login(userData);
-    
-    navigate('/');
+      navigate('/');
+    } catch (err) {
+      setError(err.message || 'Не удалось зарегистрироваться. Попробуйте ещё раз.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -80,8 +99,8 @@ function SignUp() {
               
               {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
               
-              <S.ModalBtnEnter type="submit">
-                Зарегистрироваться
+              <S.ModalBtnEnter type="submit" disabled={isLoading}>
+                {isLoading ? 'Регистрируем...' : 'Зарегистрироваться'}
               </S.ModalBtnEnter>
               <S.ModalBtnSignup>
                 <Link to="/signin">Войти</Link>

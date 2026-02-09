@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { loginUser } from '../services/auth';
 import * as S from './SignIn.styled';
 
 function SignIn() {
@@ -10,8 +11,9 @@ function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -20,7 +22,12 @@ function SignIn() {
       return;
     }
 
-    if (email && password) {
+    try {
+      setIsLoading(true);
+
+      // email используется как логин для API
+      const userFromApi = await loginUser({ login: email, password });
+
       const userData = {
         email: email,
         name: 'Ivan Ivanov',
@@ -29,8 +36,10 @@ function SignIn() {
       login(userData);
       
       navigate('/');
-    } else {
-      setError('Неверный email или пароль');
+    } catch (err) {
+      setError(err.message || 'Не удалось войти. Попробуйте ещё раз.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -60,8 +69,8 @@ function SignIn() {
               
               {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
               
-              <S.ModalBtnEnter type="submit">
-                Войти
+              <S.ModalBtnEnter type="submit" disabled={isLoading}>
+                {isLoading ? 'Входим...' : 'Войти'}
               </S.ModalBtnEnter>
               <S.ModalBtnSignup>
                 <Link to="/signup">Зарегистрироваться</Link>

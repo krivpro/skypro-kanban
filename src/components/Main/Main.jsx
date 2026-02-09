@@ -1,23 +1,30 @@
 import { useState, useEffect } from 'react';
 import Column from '../Column/Column';
-import { cardsData } from '../../data';
-import * as S from './Main.styled'
+import { getTasks } from '../../services/tasks';
+import * as S from './Main.styled';
 
 function Main() {
 
   const [isLoading, setIsLoading] = useState(true);
-
   const [cards, setCards] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    const loadData = () => {
-      setTimeout(() => {
-        setCards(cardsData);
+    const loadTasks = async () => {
+      try {
+        setIsLoading(true);
+        setError('');
+
+        const tasks = await getTasks();
+        setCards(tasks || []);
+      } catch (err) {
+        setError(err.message || 'Не удалось загрузить задачи. Попробуйте позже.');
+      } finally {
         setIsLoading(false);
-      }, 2000);
+      }
     };
 
-    loadData();
+    loadTasks();
   }, []);
 
   const columns = [
@@ -36,6 +43,10 @@ function Main() {
             {isLoading ? (
               <div className="loading-container">
                 <p className="loading-text">Данные загружаются</p>
+              </div>
+              ) : error ? (
+              <div className="loading-container">
+                <p className="loading-text">{error}</p>
               </div>
             ) : (
               columns.map((column, index) => {

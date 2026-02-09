@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../components/Header/Header';
-import { cardsData } from '../data';
+import { getTaskById, updateTask } from '../services/tasks';
 import * as S from './EditTask.styled';
 
 function EditTask() {
@@ -13,24 +13,36 @@ function EditTask() {
   const [category, setCategory] = useState('Web Design');
   const [status, setStatus] = useState('Без статуса');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [taskDate, setTaskDate] = useState('');
 
   const categories = ['Web Design', 'Research', 'Copywriting'];
   const statuses = ['Без статуса', 'Нужно сделать', 'В работе', 'Тестирование', 'Готово'];
 
   useEffect(() => {
-    const task = cardsData.find(card => card.id === parseInt(id));
-    
-    if (task) {
-      setTitle(task.title);
-      setDescription(task.title);
-      setCategory(task.topic || 'Web Design');
-      setStatus(task.status || 'Без статуса');
-    } else {
-      navigate('/404');
-    }
-  }, [id, navigate]);
+const loadTask = async () => {
+      try {
+        setIsLoading(true);
+        setError('');
 
-  const handleSubmit = (e) => {
+        const task = await getTaskById(id);
+
+        setTitle(task.title || '');
+        setDescription(task.description || '');
+        setCategory(task.topic || 'Web Design');
+        setStatus(task.status || 'Без статуса');
+        setTaskDate(task.date || '');
+      } catch (err) {
+        setError(err.message || 'Не удалось загрузить задачу.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadTask();
+  }, [id]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -39,14 +51,52 @@ function EditTask() {
       return;
     }
 
-    console.log('Обновленная задача:', { id, title, description, category, status });
+      try {
+      setIsLoading(true);
+
+      await updateTask(id, {
+        title,
+        description,
+        topic: category,
+        status,
+        date: taskDate,
+      });
 
     navigate(`/task/${id}`);
+    } catch (err) {
+      setError(err.message || 'Не удалось сохранить задачу. Попробуйте ещё раз.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleCancel = () => {
     navigate(`/task/${id}`);
   };
+
+    if (isLoading) {
+    return (
+      <div className="wrapper">
+        <Header />
+        <S.Container>
+          <p>Загрузка...</p>
+        </S.Container>
+      </div>
+    );
+  }
+
+  if (error && !title) {
+    return (
+      <div className="wrapper">
+        <Header />
+        <S.Container>
+          <div>
+            <h2>{error}</h2>
+          </div>
+        </S.Container>
+      </div>
+    );
+  }
 
   return (
     <div className="wrapper">

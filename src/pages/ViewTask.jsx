@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import Header from '../components/Header/Header';
-import { cardsData } from '../data';
+import { getTaskById, deleteTask } from '../services/tasks';
 import * as S from './ViewTask.styled';
 
 function ViewTask() {
@@ -10,21 +10,43 @@ function ViewTask() {
   
   const [task, setTask] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const foundTask = cardsData.find(card => card.id === parseInt(id));
-    
-    if (foundTask) {
-      setTask(foundTask);
-    }
-    setLoading(false);
+    const loadTask = async () => {
+      try {
+        setLoading(true);
+        setError('');
+
+        const taskFromApi = await getTaskById(id);
+        setTask(taskFromApi);
+      } catch (err) {
+        setError(err.message || 'Не удалось загрузить задачу.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadTask();
   }, [id]);
 
-  const handleDelete = () => {
-    if (window.confirm('Вы уверены, что хотите удалить эту задачу?')) {
-      console.log('Удаление задачи:', id);
+  const handleDelete = async () => {
+    if (!window.confirm('Вы уверены, что хотите удалить эту задачу?')) {
+      return;
+    }
+
+    try {
+      setIsDeleting(true);
+      setError('');
+
+      await deleteTask(id);
       
       navigate('/');
+    } catch (err) {
+      setError(err.message || 'Не удалось удалить задачу. Попробуйте ещё раз.');
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -34,6 +56,20 @@ function ViewTask() {
         <Header />
         <S.Container>
           <S.Loading>Загрузка...</S.Loading>
+        </S.Container>
+      </div>
+    );
+  }
+
+  if (error && !task) {
+    return (
+      <div className="wrapper">
+        <Header />
+        <S.Container>
+          <S.NotFound>
+            <h2>{error}</h2>
+            <Link to="/">Вернуться на главную</Link>
+          </S.NotFound>
         </S.Container>
       </div>
     );
@@ -86,7 +122,7 @@ function ViewTask() {
             <S.DescriptionBlock>
               <S.Label>Описание задачи</S.Label>
               <S.Description>
-                {task.title}
+                {task.description || 'Описание отсутствует'}
               </S.Description>
             </S.DescriptionBlock>
 
@@ -99,8 +135,8 @@ function ViewTask() {
               <S.ButtonEdit to={`/task/${id}/edit`}>
                 Редактировать задачу
               </S.ButtonEdit>
-              <S.ButtonDelete onClick={handleDelete}>
-                Удалить задачу
+              <S.ButtonDelete onClick={handleDelete} disabled={isDeleting}>
+                {isDeleting ? 'Удаляем...' : 'Удалить задачу'}
               </S.ButtonDelete>
               <S.ButtonClose onClick={() => navigate('/')}>
                 Закрыть
