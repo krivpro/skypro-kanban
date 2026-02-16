@@ -28,9 +28,11 @@ function AddTask() {
       setIsLoading(true);
 
       await createTask({
-        title,
-        description,
+        title: title.trim() || 'Новая задача',
         topic: category,
+        status: 'Без статуса',
+        description: description.trim() || '',
+        date: new Date().toISOString(),
       });
 
     navigate('/');

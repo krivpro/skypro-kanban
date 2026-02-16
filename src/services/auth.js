@@ -3,18 +3,24 @@ import { api, handleApiError } from './api';
 // Регистрация нового пользователя
 export const registerUser = async ({ login, name, password }) => {
   try {
-    const { data } = await api.post('/user', {
-      login,
-      name,
-      password,
-    });
+    // Это API не любит заголовок Content-Type: application/json,
+    // поэтому явно переопределяем его на пустой
+    const { data } = await api.post(
+      '/user',
+      {
+        login,
+        name,
+        password,
+      },
+      {
+        headers: {
+          'Content-Type': '',
+        },
+      },
+    );
 
     return data.user;
   } catch (error) {
-    if (error.response?.status === 400) {
-      throw new Error('Пользователь с таким логином уже существует.');
-    }
-
     handleApiError(error);
   }
 };
@@ -22,17 +28,21 @@ export const registerUser = async ({ login, name, password }) => {
 // Авторизация пользователя
 export const loginUser = async ({ login, password }) => {
   try {
-    const { data } = await api.post('/user/login', {
-      login,
-      password,
-    });
+    const { data } = await api.post(
+      '/user/login',
+      {
+        login,
+        password,
+      },
+      {
+        headers: {
+          'Content-Type': '',
+        },
+      },
+    );
 
     return data.user;
   } catch (error) {
-    if (error.response?.status === 400) {
-      throw new Error('Неверный логин или пароль.');
-    }
-
     handleApiError(error);
   }
 };
