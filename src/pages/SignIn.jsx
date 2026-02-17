@@ -29,8 +29,11 @@ function SignIn() {
       const userFromApi = await loginUser({ login: email, password });
 
       const userData = {
-        email: email,
-        name: 'Ivan Ivanov',
+        id: userFromApi.id,
+        name: userFromApi.name,
+        login: userFromApi.login,
+        email: userFromApi.login,
+        token: userFromApi.token,
       };
 
       login(userData);
