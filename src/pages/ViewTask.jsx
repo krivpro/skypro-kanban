@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import Header from '../components/Header/Header';
-import { getTaskById, deleteTask } from '../services/tasks';
+import { useTasks } from '../contexts/TasksContext';
 import * as S from './ViewTask.styled';
 
 function ViewTask() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { getTaskById, deleteTask } = useTasks();
   
   const [task, setTask] = useState(null);
   const [loading, setLoading] = useState(true);

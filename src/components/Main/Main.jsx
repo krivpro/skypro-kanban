@@ -1,31 +1,9 @@
-import { useState, useEffect } from 'react';
 import Column from '../Column/Column';
-import { getTasks } from '../../services/tasks';
+import { useTasks } from '../../contexts/TasksContext';
 import * as S from './Main.styled';
 
 function Main() {
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [cards, setCards] = useState([]);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    const loadTasks = async () => {
-      try {
-        setIsLoading(true);
-        setError('');
-
-        const tasks = await getTasks();
-        setCards(tasks || []);
-      } catch (err) {
-        setError(err.message || 'Не удалось загрузить задачи. Попробуйте позже.');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadTasks();
-  }, []);
+  const { tasks, isLoading, error } = useTasks();
 
   const columns = [
     { title: 'Без статуса', status: 'Без статуса' },
@@ -50,7 +28,7 @@ function Main() {
               </div>
             ) : (
               columns.map((column, index) => {
-                const columnCards = cards.filter(card => card.status === column.status);
+                const columnCards = tasks.filter((card) => card.status === column.status);
 
                 return (
                   <Column

@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../components/Header/Header';
-import { getTaskById, updateTask } from '../services/tasks';
+import { useTasks } from '../contexts/TasksContext';
 import * as S from './EditTask.styled';
 
 function EditTask() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const { getTaskById, updateTask } = useTasks();
   
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -20,7 +21,7 @@ function EditTask() {
   const statuses = ['Без статуса', 'Нужно сделать', 'В работе', 'Тестирование', 'Готово'];
 
   useEffect(() => {
-const loadTask = async () => {
+    const loadTask = async () => {
       try {
         setIsLoading(true);
         setError('');

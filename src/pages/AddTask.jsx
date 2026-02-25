@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header/Header';
-import { createTask } from '../services/tasks';
+import { useTasks } from '../contexts/TasksContext';
 import * as S from './AddTask.styled';
 
 function AddTask() {
   const navigate = useNavigate();
+  const { createTask } = useTasks();
   
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -113,4 +114,3 @@ function AddTask() {
 }
 
 export default AddTask;
-
