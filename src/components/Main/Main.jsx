@@ -1,26 +1,48 @@
 import Column from '../Column/Column';
+import { useTasks } from '../../contexts/TasksContext';
+import * as S from './Main.styled';
 
 function Main() {
+  const { tasks, isLoading, error } = useTasks();
+
   const columns = [
-    { title: 'Без статуса', cardsCount: 5 },
-    { title: 'Нужно сделать', cardsCount: 1 },
-    { title: 'В работе', cardsCount: 3 },
-    { title: 'Тестирование', cardsCount: 1 },
-    { title: 'Готово', cardsCount: 1 }
+    { title: 'Без статуса', status: 'Без статуса' },
+    { title: 'Нужно сделать', status: 'Нужно сделать' },
+    { title: 'В работе', status: 'В работе' },
+    { title: 'Тестирование', status: 'Тестирование' },
+    { title: 'Готово', status: 'Готово' }
   ];
 
   return (
-    <main className="main">
-      <div className="container">
-        <div className="main__block">
-          <div className="main__content">
-            {columns.map((column, index) => (
-              <Column key={index} title={column.title} cardsCount={column.cardsCount} />
-            ))}
-          </div>
-        </div>
-      </div>
-    </main>
+    <S.Main>
+      <S.Container>
+        <S.Block>
+          <S.Content>
+            {isLoading ? (
+              <div className="loading-container">
+                <p className="loading-text">Данные загружаются</p>
+              </div>
+              ) : error ? (
+              <div className="loading-container">
+                <p className="loading-text">{error}</p>
+              </div>
+            ) : (
+              columns.map((column, index) => {
+                const columnCards = tasks.filter((card) => card.status === column.status);
+
+                return (
+                  <Column
+                  key={index}
+                  title={column.title}
+                  cards={columnCards}
+                  />
+                );
+              })
+            )}
+          </S.Content>
+        </S.Block>
+      </S.Container>
+    </S.Main>
   );
 }
 
