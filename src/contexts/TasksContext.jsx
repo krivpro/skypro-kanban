@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useAuth } from './AuthContext';
 import {
   getTasks as apiGetTasks,
   getTaskById as apiGetTaskById,
@@ -23,8 +24,16 @@ export const TasksProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const { isAuthenticated } = useAuth();
 
   const loadTasks = async () => {
+    if (!isAuthenticated) {
+      setTasks([]);
+      setError('');
+      setIsLoading(false);
+      return;
+    }
+
     try {
       setIsLoading(true);
       setError('');
@@ -39,8 +48,15 @@ export const TasksProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      setTasks([]);
+      setError('');
+      setIsLoading(false);
+      return;
+    }
+
     loadTasks();
-  }, []);
+  }, [isAuthenticated]);
 
   const createTask = async (taskData) => {
     await apiCreateTask(taskData);
