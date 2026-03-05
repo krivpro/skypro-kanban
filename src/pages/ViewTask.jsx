@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Header from '../components/Header/Header';
 import { useTasks } from '../contexts/TasksContext';
 import * as S from './ViewTask.styled';
@@ -42,10 +43,11 @@ function ViewTask() {
       setError('');
 
       await deleteTask(id);
-      
+      toast.success('Задача удалена');
       navigate('/');
     } catch (err) {
       setError(err.message || 'Не удалось удалить задачу. Попробуйте ещё раз.');
+      toast.error(err.message || 'Не удалось удалить задачу. Попробуйте ещё раз.');
     } finally {
       setIsDeleting(false);
     }

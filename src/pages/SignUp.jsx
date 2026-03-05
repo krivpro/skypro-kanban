@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useAuth } from '../contexts/AuthContext';
+import { useThemeMode } from '../contexts/ThemeContext';
 import { registerUser } from '../services/auth';
 import * as S from './SignUp.styled';
 
 function SignUp() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { themeName } = useThemeMode();
   
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -19,7 +22,7 @@ function SignUp() {
     e.preventDefault();
     setError('');
 
-    if (!name || !email || !password || !confirmPassword) {
+    if (!name.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
       setError('Пожалуйста, заполните все поля');
       return;
     }
@@ -39,8 +42,8 @@ function SignUp() {
 
       // email используется как логин для API
       const userFromApi = await registerUser({
-        login: email,
-        name,
+        login: email.trim(),
+        name: name.trim(),
         password,
       });
 
@@ -53,9 +56,11 @@ function SignUp() {
       };
 
     login(userData);
+    toast.success('Регистрация прошла успешно');
       navigate('/');
     } catch (err) {
       setError(err.message || 'Не удалось зарегистрироваться. Попробуйте ещё раз.');
+      toast.error(err.message || 'Не удалось зарегистрироваться. Попробуйте ещё раз.');
     } finally {
       setIsLoading(false);
     }
@@ -68,7 +73,7 @@ function SignUp() {
           <S.ModalFormLogin>
             <Link to="/">
               <S.ModalLogo>
-                <img src="/images/logo.png" alt="logo" />
+                <img src={themeName === 'dark' ? '/images/logo_dark.png' : '/images/logo.png'} alt="logo" />
               </S.ModalLogo>
             </Link>
             <S.ModalForm onSubmit={handleSubmit}>

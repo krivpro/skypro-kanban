@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 100%;
   min-height: 100vh;
-  background-color: #EAEEF6;
+  background-color: ${({ theme }) => theme.colors.pageBg};
   padding: 40px 0;
 `;
 
@@ -15,7 +15,7 @@ export const ModalBlock = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background-color: #FFFFFF;
+  background-color: ${({ theme }) => theme.colors.cardBg};
   border-radius: 12px;
   padding: 30px;
   position: relative;
@@ -25,7 +25,7 @@ export const ModalTitle = styled.h3`
   font-size: 24px;
   font-weight: 500;
   margin-bottom: 20px;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 export const ModalClose = styled.button`
@@ -58,7 +58,7 @@ export const FormBlock = styled.div`
 export const Label = styled.label`
   font-size: 14px;
   font-weight: 500;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 export const Input = styled.input`
@@ -70,7 +70,7 @@ export const Input = styled.input`
   
   &:focus {
     outline: none;
-    border-color: #009EE4;
+    border-color: ${({ theme }) => theme.colors.accent};
   }
 `;
 
@@ -85,7 +85,7 @@ export const TextArea = styled.textarea`
   
   &:focus {
     outline: none;
-    border-color: #009EE4;
+    border-color: ${({ theme }) => theme.colors.accent};
   }
 `;
 
@@ -100,7 +100,7 @@ export const StatusSelect = styled.select`
   
   &:focus {
     outline: none;
-    border-color: #009EE4;
+    border-color: ${({ theme }) => theme.colors.accent};
   }
 `;
 
@@ -153,29 +153,29 @@ export const ButtonGroup = styled.div`
 
 export const ButtonSave = styled.button`
   padding: 12px 24px;
-  background-color: #009EE4;
-  color: #FFFFFF;
+  background-color: ${({ theme }) => theme.colors.accent};
+  color: ${({ theme }) => theme.colors.text};
   border: none;
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
   
   &:hover {
-    background-color: #0080C1;
+    background-color: ${({ theme }) => theme.colors.accentHover};
   }
 `;
 
 export const ButtonCancel = styled.button`
   padding: 12px 24px;
   background-color: transparent;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
   border: 1px solid #D0CECE;
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
   
   &:hover {
-    background-color: #F4F5F6;
+    background-color: ${({ theme }) => theme.colors.pageBg};
   }
 `;
 

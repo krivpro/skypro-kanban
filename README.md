@@ -1,16 +1,72 @@
-# React + Vite
+## Kanban-приложение
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Приложение — Kanban-доска на React + Vite с авторизацией и работой с задачами через API `https://wedev-api.sky.pro/api`.
 
-Currently, two official plugins are available:
+### Основной функционал
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Авторизация и регистрация**
+  - Регистрация нового пользователя.
+  - Вход по логину (email) и паролю.
+  - Хранение токена и данных пользователя в `localStorage`, автоматическое восстановление сессии.
+  - Защищённые роуты (`/`, `/task/*`, `/exit`) доступны только авторизованным пользователям.
 
-## React Compiler
+- **Работа с задачами (Kanban)**
+  - Загрузка списка задач текущего пользователя с сервера.
+  - Отображение задач по статусам в колонках: «Без статуса», «Нужно сделать», «В работе», «Тестирование», «Готово».
+  - Создание новой задачи: название, описание, категория, статус, дата.
+  - Редактирование существующей задачи (все поля).
+  - Удаление задачи с подтверждением.
+  - Просмотр детальной карточки задачи.
+  - Обработка ошибок сервера для всех операций (загрузка, добавление, редактирование, удаление).
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Валидация и сообщения об ошибках**
+  - Нельзя отправить пустые или состоящие только из пробелов поля в формах:
+    - входа (`email`, `пароль`);
+    - регистрации (`имя`, `email`, `пароль`, `повтор пароля`);
+    - создания и редактирования задачи (`название`).
+  - Текст ошибок от сервера отображается пользователю под полями/в контексте формы.
+  - При загрузке задач и ошибках отображаются понятные сообщения вместо «падения» приложения.
 
-## Expanding the ESLint configuration
+- **Состояния загрузки и пустых данных**
+  - При загрузке списка задач показывается анимированный индикатор загрузки (spinner + текст).
+  - Если задач пока нет, пользователь видит сообщение «Новых задач нет», а не ошибки.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Страница 404**
+  - Отдельная стилизованная страница 404 в общем стиле приложения (шрифты и цвета совпадают).
+  - Есть понятная надпись и ссылка «Вернуться на главную».
+
+### Дополнительные фичи
+
+- **Смена темы (ThemeProvider + styled-components)**
+  - Реализован контекст темы и обёртка `ThemeProvider` на основе `styled-components`.
+  - Две темы: **светлая** и **тёмная**.
+  - Переключатель темы находится в пользовательском меню в шапке («Тёмная тема»).
+  - Тема сохраняется в `localStorage` и восстанавливается при следующем заходе.
+  - Основные страницы (главная, просмотр/редактирование задачи, модальное окно выхода, 404) адаптируют фон, текст и ключевые элементы под выбранную тему.
+
+- **Продвинутые оповещения (React-Toastify)**
+  - Интегрирована библиотека `react-toastify`.
+  - Toast-уведомления отображаются при:
+    - успешной авторизации и регистрации;
+    - ошибках авторизации/регистрации;
+    - успешном создании, редактировании и удалении задач;
+    - ошибках при загрузке списка задач или операциях с ними.
+  - Тема уведомлений синхронизирована с текущей темой приложения (light/dark).
+
+### Технологии
+
+- React 19
+- React Router
+- styled-components (включая `ThemeProvider`)
+- React-Toastify
+- Axios
+- Vite
+
+### Запуск проекта
+
+```bash
+npm install
+npm run dev
+```
+
+Проект собран на основе шаблона React + Vite, но структура и логика переработаны под требования курсовой работы Kanban.

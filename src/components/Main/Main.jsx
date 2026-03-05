@@ -10,7 +10,7 @@ function Main() {
     { title: 'Нужно сделать', status: 'Нужно сделать' },
     { title: 'В работе', status: 'В работе' },
     { title: 'Тестирование', status: 'Тестирование' },
-    { title: 'Готово', status: 'Готово' }
+    { title: 'Готово', status: 'Готово' },
   ];
 
   return (
@@ -20,21 +20,26 @@ function Main() {
           <S.Content>
             {isLoading ? (
               <div className="loading-container">
-                <p className="loading-text">Данные загружаются</p>
+                <div className="loader" />
+                <p className="loading-text">Данные загружаются...</p>
               </div>
               ) : error ? (
               <div className="loading-container">
                 <p className="loading-text">{error}</p>
               </div>
+              ) : tasks.length === 0 ? (
+              <div className="loading-container">
+                <p className="loading-text">Новых задач нет</p>
+              </div>
             ) : (
-              columns.map((column, index) => {
+              columns.map((column) => {
                 const columnCards = tasks.filter((card) => card.status === column.status);
 
                 return (
                   <Column
-                  key={index}
-                  title={column.title}
-                  cards={columnCards}
+                    key={column.status}
+                    title={column.title}
+                    cards={columnCards}
                   />
                 );
               })

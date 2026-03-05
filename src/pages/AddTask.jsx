@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Header from '../components/Header/Header';
 import { useTasks } from '../contexts/TasksContext';
 import * as S from './AddTask.styled';
@@ -36,9 +37,11 @@ function AddTask() {
         date: new Date().toISOString(),
       });
 
+    toast.success('Задача успешно создана');
     navigate('/');
     } catch (err) {
       setError(err.message || 'Не удалось создать задачу. Попробуйте ещё раз.');
+      toast.error(err.message || 'Не удалось создать задачу. Попробуйте ещё раз.');
     } finally {
       setIsLoading(false);
     }

@@ -18,16 +18,13 @@ export const AuthProvider = ({ children }) => {
       const savedUser = localStorage.getItem('user');
       if (savedUser) {
         const parsedUser = JSON.parse(savedUser);
-        // Восстанавливаем токен в axios при инициализации
         if (parsedUser.token) {
           setAuthToken(parsedUser.token);
         }
         return parsedUser;
       }
       return null;
-    } catch (error) {
-
-      console.error('Ошибка при чтении данных пользователя из localStorage:', error);
+      } catch (error) {
       localStorage.removeItem('user');
       return null;
     }

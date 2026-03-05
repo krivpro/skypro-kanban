@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth } from './AuthContext';
+import { toast } from 'react-toastify';
 import {
   getTasks as apiGetTasks,
   getTaskById as apiGetTaskById,
@@ -42,6 +43,7 @@ export const TasksProvider = ({ children }) => {
       setTasks(loadedTasks || []);
     } catch (err) {
       setError(err.message || 'Не удалось загрузить задачи. Попробуйте позже.');
+      toast.error(err.message || 'Не удалось загрузить задачи. Попробуйте позже.');
     } finally {
       setIsLoading(false);
     }

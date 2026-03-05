@@ -7,7 +7,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #EAEEF6;
+  background-color: ${({ theme }) => theme.colors.pageBg};
 `;
 
 export const Content = styled.div`
@@ -18,7 +18,7 @@ export const Content = styled.div`
 export const Title = styled.h1`
   font-size: 120px;
   font-weight: 700;
-  color: #009EE4;
+  color: ${({ theme }) => theme.colors.accent};
   margin: 0;
   line-height: 1;
 `;
@@ -26,27 +26,27 @@ export const Title = styled.h1`
 export const Subtitle = styled.h2`
   font-size: 32px;
   font-weight: 500;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
   margin: 20px 0;
 `;
 
 export const Description = styled.p`
   font-size: 18px;
-  color: #94A6BE;
+  color: ${({ theme }) => theme.colors.mutedText};
   margin-bottom: 30px;
 `;
 
 export const HomeLink = styled(Link)`
   display: inline-block;
   padding: 12px 24px;
-  background-color: #009EE4;
-  color: #FFFFFF;
+  background-color: ${({ theme }) => theme.colors.accent};
+  color: ${({ theme }) => theme.colors.text};
   border-radius: 6px;
   font-size: 16px;
   text-decoration: none;
   
   &:hover {
-    background-color: #0080C1;
+    background-color: ${({ theme }) => theme.colors.accentHover};
   }
 `;
 

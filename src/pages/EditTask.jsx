@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Header from '../components/Header/Header';
 import { useTasks } from '../contexts/TasksContext';
 import * as S from './EditTask.styled';
@@ -56,16 +57,18 @@ function EditTask() {
       setIsLoading(true);
 
       await updateTask(id, {
-        title,
-        description,
+        title: title.trim(),
+        description: description.trim(),
         topic: category,
         status,
         date: taskDate,
       });
 
+    toast.success('Изменения сохранены');
     navigate(`/task/${id}`);
     } catch (err) {
       setError(err.message || 'Не удалось сохранить задачу. Попробуйте ещё раз.');
+      toast.error(err.message || 'Не удалось сохранить задачу. Попробуйте ещё раз.');
     } finally {
       setIsLoading(false);
     }

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export const Container = styled.div`
   width: 100%;
   min-height: 100vh;
-  background-color: #EAEEF6;
+  background-color: ${({ theme }) => theme.colors.pageBg};
   padding: 40px 0;
 `;
 
@@ -16,7 +16,7 @@ export const ModalBlock = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background-color: #FFFFFF;
+  background-color: ${({ theme }) => theme.colors.cardBg};
   border-radius: 12px;
   padding: 30px;
 `;
@@ -33,7 +33,7 @@ export const ModalHeader = styled.div`
 export const ModalTitle = styled.h3`
   font-size: 24px;
   font-weight: 500;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
   margin: 0;
   flex: 1;
 `;
@@ -63,34 +63,34 @@ export const Label = styled.label`
   display: block;
   font-size: 14px;
   font-weight: 500;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
   margin-bottom: 8px;
 `;
 
 export const Status = styled.div`
   padding: 12px;
-  background-color: #EAEEF6;
+  background-color: ${({ theme }) => theme.colors.pageBg};
   border-radius: 6px;
   font-size: 16px;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 export const Description = styled.div`
   padding: 12px;
-  background-color: #EAEEF6;
+  background-color: ${({ theme }) => theme.colors.pageBg};
   border-radius: 6px;
   font-size: 16px;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
   min-height: 100px;
   white-space: pre-wrap;
 `;
 
 export const Date = styled.div`
   padding: 12px;
-  background-color: #EAEEF6;
+  background-color: ${({ theme }) => theme.colors.pageBg};
   border-radius: 6px;
   font-size: 16px;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 export const ButtonGroup = styled.div`
@@ -102,8 +102,8 @@ export const ButtonGroup = styled.div`
 
 export const ButtonEdit = styled(Link)`
   padding: 12px 24px;
-  background-color: #009EE4;
-  color: #FFFFFF;
+  background-color: ${({ theme }) => theme.colors.accent};
+  color: ${({ theme }) => theme.colors.text};
   border: none;
   border-radius: 6px;
   font-size: 16px;
@@ -113,14 +113,14 @@ export const ButtonEdit = styled(Link)`
   text-align: center;
   
   &:hover {
-    background-color: #0080C1;
+    background-color: ${({ theme }) => theme.colors.accentHover};
   }
 `;
 
 export const ButtonDelete = styled.button`
   padding: 12px 24px;
   background-color: transparent;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
   border: 1px solid #D0CECE;
   border-radius: 6px;
   font-size: 16px;
@@ -128,15 +128,15 @@ export const ButtonDelete = styled.button`
   
   &:hover {
     background-color: #FFE5E5;
-    border-color: #FF0000;
-    color: #FF0000;
+    border-color: ${({ theme }) => theme.colors.danger};
+    color: ${({ theme }) => theme.colors.danger};
   }
 `;
 
 export const ButtonClose = styled.button`
   padding: 12px 24px;
-  background-color: #009EE4;
-  color: #FFFFFF;
+  background-color: ${({ theme }) => theme.colors.accent};
+  color: ${({ theme }) => theme.colors.text};
   border: none;
   border-radius: 6px;
   font-size: 16px;
@@ -144,7 +144,7 @@ export const ButtonClose = styled.button`
   margin-left: auto;
   
   &:hover {
-    background-color: #0080C1;
+    background-color: ${({ theme }) => theme.colors.accentHover};
   }
 `;
 
@@ -152,7 +152,7 @@ export const Loading = styled.div`
   text-align: center;
   padding: 40px;
   font-size: 18px;
-  color: #94A6BE;
+  color: ${({ theme }) => theme.colors.mutedText};
 `;
 
 export const NotFound = styled.div`
@@ -161,11 +161,11 @@ export const NotFound = styled.div`
   
   h2 {
     margin-bottom: 20px;
-    color: #000000;
+    color: ${({ theme }) => theme.colors.text};
   }
   
   a {
-    color: #009EE4;
+    color: ${({ theme }) => theme.colors.accent};
     text-decoration: none;
     
     &:hover {

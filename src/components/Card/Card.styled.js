@@ -10,7 +10,7 @@ export const Item = styled.div`
 export const Card = styled.div`
   width: 220px;
   height: 130px;
-  background-color: #FFFFFF;
+  background-color: ${({ theme }) => theme.colors.cardBg};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -54,7 +54,7 @@ export const Btn = styled.div`
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background-color: #94A6BE;
+    background-color: ${({ theme }) => theme.colors.mutedText};
   }
 `
 
@@ -62,10 +62,10 @@ export const Title = styled.h3`
   font-size: 14px;
   font-weight: 500;
   line-height: 18px;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
   margin-bottom: 10px;
   a {
-    color: #000000;
+    color: ${({ theme }) => theme.colors.text};
     text-decoration: none;
   }
   a:hover {
@@ -89,7 +89,7 @@ export const DateInfo = styled.div`
     margin-left: 6px;
     font-size: 10px;
     line-height: 13px;
-    color: #94A6BE;
+    color: ${({ theme }) => theme.colors.mutedText};
     letter-spacing: 0.2px;
   }
 `

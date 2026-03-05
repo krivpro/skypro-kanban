@@ -10,13 +10,13 @@ export const Title = styled.div`
   padding: 0 10px;
   margin: 15px 0;
   p {
-    color: #94A6BE;
+    color: ${({ theme }) => theme.colors.mutedText};
     font-size: 14px;
     font-weight: 600;
     line-height: 1;
     text-transform: uppercase;
   }
-`
+`;
 
 export const Cards = styled.div`
   width: 100%;

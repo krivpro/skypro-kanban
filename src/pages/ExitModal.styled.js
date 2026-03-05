@@ -14,7 +14,7 @@ export const ModalOverlay = styled.div`
 `;
 
 export const ModalBlock = styled.div`
-  background-color: #FFFFFF;
+  background-color: ${({ theme }) => theme.colors.cardBg};
   border-radius: 12px;
   padding: 30px;
   max-width: 400px;
@@ -30,7 +30,7 @@ export const ModalContent = styled.div`
 export const ModalTitle = styled.h2`
   font-size: 24px;
   font-weight: 500;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
   margin-bottom: 30px;
   text-align: center;
 `;
@@ -48,15 +48,16 @@ export const ButtonGroup = styled.div`
 export const ButtonYes = styled.button`
   flex: 1;
   padding: 12px 24px;
-  background-color: #009EE4;
-  color: #FFFFFF;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.primaryButtonText};
   border: none;
   border-radius: 6px;
   font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
-  
+
   &:hover {
-    background-color: #0080C1;
+    background-color: ${({ theme }) => theme.colors.primaryHover};
   }
 `;
 
@@ -64,14 +65,17 @@ export const ButtonNo = styled.button`
   flex: 1;
   padding: 12px 24px;
   background-color: transparent;
-  color: #000000;
-  border: 1px solid #D0CECE;
+  color: ${({ theme }) => theme.colors.text};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 6px;
   font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
-  
+
   &:hover {
-    background-color: #F4F5F6;
+    background-color: ${({ theme }) => theme.colors.outlineButtonHoverBg};
+    color: ${({ theme }) => theme.colors.primaryButtonText};
+    border-color: ${({ theme }) => theme.colors.outlineButtonHoverBg};
   }
 `;
 

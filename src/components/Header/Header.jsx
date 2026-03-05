@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import * as S from './Header.styled'
+import { useThemeMode } from '../../contexts/ThemeContext';
+import * as S from './Header.styled';
 
 function Header() {
 
-  const navigate = useNavigate();
   const { user } = useAuth(); 
+  const { themeName } = useThemeMode();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const toggleUserMenu = () => {
@@ -17,11 +18,13 @@ function Header() {
     <S.Header>
       <S.Container>
         <S.Block>
-          <S.Logo className="_show _light">
-            <Link to="/"><img src="/images/logo.png" alt="logo"/></Link>
-          </S.Logo>
-          <S.Logo className="_dark">
-            <Link to="/"><img src="/images/logo_dark.png" alt="logo"/></Link>
+          <S.Logo>
+            <Link to="/">
+              <img
+                src={themeName === 'dark' ? '/images/logo_dark.png' : '/images/logo.png'}
+                alt="logo"
+              />
+            </Link>
           </S.Logo>
           <S.Nav>
             <S.ButtonMainNew id="btnMainNew">
@@ -46,6 +49,7 @@ function Header() {
 
 function UserSettings({ isOpen, user }) {
   const navigate = useNavigate();
+  const { themeName, toggleTheme } = useThemeMode();
 
   const handleExit = () => {
     navigate('/exit');
@@ -61,7 +65,13 @@ function UserSettings({ isOpen, user }) {
       <p className="pop-user-set__mail">{user?.email || 'email@example.com'}</p>
       <div className="pop-user-set__theme">
         <p>Темная тема</p>
-        <input type="checkbox" className="checkbox" name="checkbox"/>
+        <input
+          type="checkbox"
+          className="checkbox"
+          name="checkbox"
+          checked={themeName === 'dark'}
+          onChange={toggleTheme}
+        />
       </div>
       <button type="button" className="_hover03" onClick={handleExit}>
         Выйти

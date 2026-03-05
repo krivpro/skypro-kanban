@@ -40,7 +40,7 @@ body {
   width: 100%;
   height: 100%;
   font-family: "Roboto", Arial, Helvetica, sans-serif;
-  color: #000000;
+  color: var(--text-color);
 }
 
 .wrapper {
@@ -48,7 +48,7 @@ body {
   width: 100vw;
   min-height: 100vh;
   overflow: hidden;
-  background-color: #F1F1F1;
+  background-color: var(--bg-wrapper);
 }
 
 .container {
@@ -64,33 +64,53 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .loading-text {
   font-size: 18px;
   font-weight: 500;
-  color: #94A6BE;
+  color: var(--muted-text);
   text-align: center;
 }
 
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 4px solid rgba(148, 166, 190, 0.5);
+  border-top-color: var(--accent);
+  animation: loader-spin 0.8s linear infinite;
+}
+
+@keyframes loader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 ._hover01:hover {
-  background-color: #33399b;
+  background-color: var(--primary-hover);
 }
 
 ._hover02:hover, .header__user:hover {
-  color: #33399b;
+  color: var(--primary-hover);
 }
 ._hover02:hover::after, .header__user:hover::after {
-  border-left-color: #33399b;
-  border-bottom-color: #33399b;
+  border-left-color: var(--primary-hover);
+  border-bottom-color: var(--primary-hover);
 }
 
 ._hover03:hover {
-  background-color: #33399b;
-  color: #FFFFFF;
+  background-color: var(--outline-hover-bg);
+  color: var(--primary-button-text);
 }
 ._hover03:hover a {
-  color: #FFFFFF;
+  color: var(--primary-button-text);
 }
 
 .pop-user-set:target,
@@ -228,7 +248,7 @@ body {
 }
 
 .pop-user-set__name {
-  color: #000;
+  color: var(--text-color);
   font-size: 14px;
   font-weight: 500;
   line-height: 21px;
@@ -236,7 +256,7 @@ body {
   margin-bottom: 4px;
 }
 .pop-user-set__mail {
-  color: #94A6BE;
+  color: var(--muted-text);
   font-size: 14px;
   line-height: 21px;
   letter-spacing: -0.14px;
@@ -249,7 +269,7 @@ body {
   margin-bottom: 30px;
 }
 .pop-user-set__theme p {
-  color: #000;
+  color: var(--text-color);
   font-size: 14px;
   line-height: 21px;
   letter-spacing: -0.14px;
@@ -259,7 +279,7 @@ body {
   width: 24px;
   height: 13px;
   border-radius: 100px;
-  background: #EAEEF6;
+  background: var(--toggle-track);
   outline: none;
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -273,22 +293,23 @@ body {
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background-color: #94A6BE;
+  background-color: var(--toggle-thumb);
   transition: 0.5s;
 }
 .pop-user-set__theme input:checked[type=checkbox]::before {
   left: 12px;
+  background-color: var(--primary);
 }
 .pop-user-set button {
   width: 72px;
   height: 30px;
   background: transparent;
-  color: #565EEF;
+  color: var(--primary);
   border-radius: 4px;
-  border: 1px solid #565EEF;
+  border: 1px solid var(--primary);
 }
 .pop-user-set button a {
-  color: #565EEF;
+  color: var(--primary);
 }
 
 .pop-new-card {
@@ -731,7 +752,7 @@ body {
 .header {
   width: 100%;
   margin: 0 auto;
-  background-color: #FFFFFF;
+  background-color: var(--bg-header);
 }
 .header__block {
   height: 70px;
@@ -799,8 +820,8 @@ body {
   width: 213px;
   height: 205px;
   border-radius: 10px;
-  border: 0.7px solid rgba(148, 166, 190, 0.4);
-  background: #FFF;
+  border: 0.7px solid var(--border);
+  background: var(--popup-bg);
   box-shadow: 0px 10px 39px 0px rgba(26, 56, 101, 0.21);
   padding: 34px;
   text-align: center;
@@ -810,7 +831,7 @@ body {
 .main {
   width: 100%;
   height: calc(100vh - 70px);
-  background-color: #EAEEF6;
+  background-color: var(--bg-page);
 }
 .main__block {
   width: 100%;

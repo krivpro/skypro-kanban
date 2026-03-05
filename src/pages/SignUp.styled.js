@@ -7,7 +7,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #EAEEF6;
+  background-color: ${({ theme }) => theme.colors.pageBg};
 `;
 
 export const Wrapper = styled.div`
@@ -27,7 +27,7 @@ export const ModalBlock = styled.div`
 export const ModalFormLogin = styled.div`
   width: 366px;
   min-height: 550px;
-  background-color: #FFFFFF;
+  background-color: ${({ theme }) => theme.colors.cardBg};
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -40,7 +40,7 @@ export const ModalLogo = styled.div`
   height: 21px;
   margin-bottom: 34px;
   background-color: transparent;
-  
+
   img {
     width: 140px;
     height: auto;
@@ -59,7 +59,7 @@ export const ModalInput = styled.input`
   border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom: 1px solid #D0CECE;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderLight};
   padding: 8px 1px;
   margin-bottom: 30px;
   font-style: normal;
@@ -67,23 +67,24 @@ export const ModalInput = styled.input`
   font-size: 18px;
   line-height: 24px;
   letter-spacing: -0.05px;
-  color: #D0CECE;
+  color: ${({ theme }) => theme.colors.text};
+  background: transparent;
 
   &::placeholder {
-    color: #D0CECE;
+    color: ${({ theme }) => theme.colors.mutedText};
   }
 
   &:focus {
     outline: none;
-    border-bottom: 1px solid #009EE4;
-    color: #000000;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.text};
   }
 `;
 
 export const ModalBtnEnter = styled.button`
   width: 278px;
   height: 52px;
-  background-color: #009EE4;
+  background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 6px;
   border: none;
   margin-top: 20px;
@@ -96,15 +97,16 @@ export const ModalBtnEnter = styled.button`
   font-size: 18px;
   line-height: 24px;
   letter-spacing: -0.05px;
-  color: #FFFFFF;
+  color: ${({ theme }) => theme.colors.primaryButtonText};
   cursor: pointer;
 
-  &:hover {
-    background-color: #0080C1;
+  &:hover:not(:disabled) {
+    background-color: ${({ theme }) => theme.colors.primaryHover};
   }
 
-  &:active {
-    background-color: #0079B5;
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
   }
 `;
 
@@ -112,14 +114,14 @@ export const ModalBtnSignup = styled.button`
   width: 278px;
   height: 52px;
   background-color: transparent;
-  border: 1px solid #D0CECE;
+  border: 1px solid ${({ theme }) => theme.colors.borderLight};
   border-radius: 6px;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 24px;
   letter-spacing: -0.05px;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -127,20 +129,21 @@ export const ModalBtnSignup = styled.button`
 
   a {
     text-decoration: none;
-    color: #000000;
+    color: ${({ theme }) => theme.colors.primary};
   }
 
   &:hover {
-    background-color: #F4F5F6;
+    background-color: ${({ theme }) => theme.colors.outlineButtonHoverBg};
+    color: ${({ theme }) => theme.colors.primaryButtonText};
+    border-color: ${({ theme }) => theme.colors.outlineButtonHoverBg};
   }
-
-  &:active {
-    background-color: #D9D9D9;
+  &:hover a {
+    color: ${({ theme }) => theme.colors.primaryButtonText};
   }
 `;
 
 export const ErrorMessage = styled.div`
-  color: #FF0000;
+  color: ${({ theme }) => theme.colors.danger};
   font-size: 14px;
   margin-bottom: 10px;
   text-align: center;
