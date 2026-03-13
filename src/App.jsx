@@ -1,25 +1,30 @@
-import { useState } from 'react';
 import './App.css';
-import PopupExit from './components/PopupExit/PopupExit';
-import PopupNewCard from './components/PopupNewCard/PopupNewCard';
-import PopupBrowse from './components/PopupBrowse/PopupBrowse';
-import Header from './components/Header/Header';
-import Main from './components/Main/Main';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AppRoutes from './components/AppRoutes/AppRoutes';
+import { TasksProvider } from './contexts/TasksContext';
+import { useThemeMode } from './contexts/ThemeContext';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const { themeName } = useThemeMode();
 
   return (
-    <div className="wrapper">
-      {/* Pop-up компоненты */}
-      <PopupExit />
-      <PopupNewCard />
-      <PopupBrowse />
-      
-      {/* Основные компоненты */}
-      <Header />
-      <Main />
-    </div>
+    <TasksProvider>
+      <div className="wrapper">
+        <AppRoutes />
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme={themeName === 'dark' ? 'dark' : 'light'}
+        />
+      </div>
+    </TasksProvider>
   );
 }
 
