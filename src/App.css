@@ -817,8 +817,8 @@ body {
   position: absolute;
   top: 61px;
   right: 0;
-  width: 213px;
-  height: 205px;
+  min-width: 220px;
+  min-height: 210px;
   border-radius: 10px;
   border: 0.7px solid var(--border);
   background: var(--popup-bg);

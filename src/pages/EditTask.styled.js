@@ -21,6 +21,17 @@ export const ModalContent = styled.div`
   position: relative;
 `;
 
+export const ModalWrap = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+`;
+
 export const ModalTitle = styled.h3`
   font-size: 24px;
   font-weight: 500;
@@ -143,6 +154,10 @@ export const Category = styled.div`
   &:hover {
     opacity: 0.8;
   }
+`;
+
+export const CalendarWrapper = styled.div`
+  flex: 0 0 220px;
 `;
 
 export const ButtonGroup = styled.div`

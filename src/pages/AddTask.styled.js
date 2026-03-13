@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 100%;
   min-height: 100vh;
-  background-color: #EAEEF6;
+  background-color: ${({ theme }) => theme.colors.pageBg};
   padding: 40px 0;
 `;
 
@@ -15,7 +15,7 @@ export const ModalBlock = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  background-color: #FFFFFF;
+  background-color: ${({ theme }) => theme.colors.cardBg};
   border-radius: 12px;
   padding: 30px;
   position: relative;
@@ -25,7 +25,7 @@ export const ModalTitle = styled.h3`
   font-size: 24px;
   font-weight: 500;
   margin-bottom: 20px;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 export const ModalClose = styled.button`
@@ -39,7 +39,18 @@ export const ModalClose = styled.button`
   color: #94A6BE;
   
   &:hover {
-    color: #000000;
+    color: ${({ theme }) => theme.colors.text};
+  }
+`;
+
+export const ModalWrap = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
   }
 `;
 
@@ -47,6 +58,7 @@ export const ModalForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  flex: 1 1 370px;
 `;
 
 export const FormBlock = styled.div`
@@ -58,34 +70,46 @@ export const FormBlock = styled.div`
 export const Label = styled.label`
   font-size: 14px;
   font-weight: 500;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 export const Input = styled.input`
   width: 100%;
   padding: 12px;
-  border: 1px solid #D0CECE;
+  border: 1px solid ${({ theme }) => theme.colors.borderLight};
   border-radius: 6px;
   font-size: 16px;
+  background-color: ${({ theme }) => theme.colors.inputBg};
+  color: ${({ theme }) => theme.colors.text};
+  
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.mutedText};
+  }
   
   &:focus {
     outline: none;
-    border-color: #009EE4;
+    border-color: ${({ theme }) => theme.colors.accent};
   }
 `;
 
 export const TextArea = styled.textarea`
   width: 100%;
   padding: 12px;
-  border: 1px solid #D0CECE;
+  border: 1px solid ${({ theme }) => theme.colors.borderLight};
   border-radius: 6px;
   font-size: 16px;
   resize: vertical;
   font-family: inherit;
+  background-color: ${({ theme }) => theme.colors.inputBg};
+  color: ${({ theme }) => theme.colors.text};
+  
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.mutedText};
+  }
   
   &:focus {
     outline: none;
-    border-color: #009EE4;
+    border-color: ${({ theme }) => theme.colors.accent};
   }
 `;
 
@@ -130,6 +154,10 @@ export const Category = styled.div`
   }
 `;
 
+export const CalendarWrapper = styled.div`
+  flex: 0 0 220px;
+`;
+
 export const ButtonGroup = styled.div`
   display: flex;
   gap: 12px;
@@ -138,34 +166,34 @@ export const ButtonGroup = styled.div`
 
 export const ButtonCreate = styled.button`
   padding: 12px 24px;
-  background-color: #009EE4;
-  color: #FFFFFF;
+  background-color: ${({ theme }) => theme.colors.accent};
+  color: ${({ theme }) => theme.colors.text};
   border: none;
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
   
   &:hover {
-    background-color: #0080C1;
+    background-color: ${({ theme }) => theme.colors.accentHover};
   }
 `;
 
 export const ButtonCancel = styled.button`
   padding: 12px 24px;
   background-color: transparent;
-  color: #000000;
-  border: 1px solid #D0CECE;
+  color: ${({ theme }) => theme.colors.text};
+  border: 1px solid ${({ theme }) => theme.colors.borderLight};
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
   
   &:hover {
-    background-color: #F4F5F6;
+    background-color: ${({ theme }) => theme.colors.pageBg};
   }
 `;
 
 export const ErrorMessage = styled.div`
-  color: #FF0000;
+  color: ${({ theme }) => theme.colors.danger};
   font-size: 14px;
   padding: 10px;
   background-color: #FFE5E5;

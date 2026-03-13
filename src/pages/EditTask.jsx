@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Header from '../components/Header/Header';
+import Calendar, { formatRuDate } from '../components/Calendar/Calendar';
 import { useTasks } from '../contexts/TasksContext';
 import * as S from './EditTask.styled';
 
@@ -61,7 +62,7 @@ function EditTask() {
         description: description.trim(),
         topic: category,
         status,
-        date: taskDate,
+        date: formatRuDate(taskDate),
       });
 
     toast.success('Изменения сохранены');
@@ -110,62 +111,79 @@ function EditTask() {
           <S.ModalContent>
             <S.ModalTitle>Редактирование задачи</S.ModalTitle>
             <S.ModalClose onClick={handleCancel}>✕</S.ModalClose>
-            
-            <S.ModalForm onSubmit={handleSubmit}>
-              <S.FormBlock>
-                <S.Label>Название задачи</S.Label>
-                <S.Input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Введите название задачи..."
-                />
-              </S.FormBlock>
 
-              <S.FormBlock>
-                <S.Label>Описание задачи</S.Label>
-                <S.TextArea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Введите описание задачи..."
-                  rows="5"
-                />
-              </S.FormBlock>
+            <S.ModalWrap>
+              <S.ModalForm onSubmit={handleSubmit}>
+                <S.FormBlock>
+                  <S.Label>Название задачи</S.Label>
+                  <S.Input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Введите название задачи..."
+                  />
+                </S.FormBlock>
 
-              <S.FormBlock>
-                <S.Label>Статус</S.Label>
-                <S.StatusSelect value={status} onChange={(e) => setStatus(e.target.value)}>
-                  {statuses.map((stat) => (
-                    <option key={stat} value={stat}>{stat}</option>
-                  ))}
-                </S.StatusSelect>
-              </S.FormBlock>
+                <S.FormBlock>
+                  <S.Label>Описание задачи</S.Label>
+                  <S.TextArea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Введите описание задачи..."
+                    rows="5"
+                  />
+                </S.FormBlock>
 
-              <S.CategoriesBlock>
-                <S.Label>Категория</S.Label>
-                <S.Categories>
-                  {categories.map((cat) => (
-                    <S.Category
-                      key={cat}
-                      $active={category === cat}
-                      $color={cat === 'Web Design' ? 'orange' : cat === 'Research' ? 'green' : 'purple'}
-                      onClick={() => setCategory(cat)}
-                    >
-                      {cat}
-                    </S.Category>
-                  ))}
-                </S.Categories>
-              </S.CategoriesBlock>
+                <S.FormBlock>
+                  <S.Label>Статус</S.Label>
+                  <S.StatusSelect
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    {statuses.map((stat) => (
+                      <option key={stat} value={stat}>
+                        {stat}
+                      </option>
+                    ))}
+                  </S.StatusSelect>
+                </S.FormBlock>
 
-              {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
+                <S.CategoriesBlock>
+                  <S.Label>Категория</S.Label>
+                  <S.Categories>
+                    {categories.map((cat) => (
+                      <S.Category
+                        key={cat}
+                        $active={category === cat}
+                        $color={
+                          cat === 'Web Design'
+                            ? 'orange'
+                            : cat === 'Research'
+                            ? 'green'
+                            : 'purple'
+                        }
+                        onClick={() => setCategory(cat)}
+                      >
+                        {cat}
+                      </S.Category>
+                    ))}
+                  </S.Categories>
+                </S.CategoriesBlock>
 
-              <S.ButtonGroup>
-                <S.ButtonSave type="submit">Сохранить</S.ButtonSave>
-                <S.ButtonCancel type="button" onClick={handleCancel}>
-                  Отменить
-                </S.ButtonCancel>
-              </S.ButtonGroup>
-            </S.ModalForm>
+                {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
+
+                <S.ButtonGroup>
+                  <S.ButtonSave type="submit">Сохранить</S.ButtonSave>
+                  <S.ButtonCancel type="button" onClick={handleCancel}>
+                    Отменить
+                  </S.ButtonCancel>
+                </S.ButtonGroup>
+              </S.ModalForm>
+
+              <S.CalendarWrapper>
+                <Calendar selectedDate={taskDate} onChange={setTaskDate} />
+              </S.CalendarWrapper>
+            </S.ModalWrap>
           </S.ModalContent>
         </S.ModalBlock>
       </S.Container>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Header from '../components/Header/Header';
 import { useTasks } from '../contexts/TasksContext';
+import Calendar, { formatRuDate } from '../components/Calendar/Calendar';
 import * as S from './AddTask.styled';
 
 function AddTask() {
@@ -12,6 +13,7 @@ function AddTask() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('Web Design');
+  const [dueDate, setDueDate] = useState(new Date());
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,7 +36,7 @@ function AddTask() {
         topic: category,
         status: 'Без статуса',
         description: description.trim() || '',
-        date: new Date().toISOString(),
+        date: formatRuDate(dueDate),
       });
 
     toast.success('Задача успешно создана');
@@ -59,56 +61,68 @@ function AddTask() {
           <S.ModalContent>
             <S.ModalTitle>Создание задачи</S.ModalTitle>
             <S.ModalClose onClick={handleCancel}>✕</S.ModalClose>
-            
-            <S.ModalForm onSubmit={handleSubmit}>
-              <S.FormBlock>
-                <S.Label>Название задачи</S.Label>
-                <S.Input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Введите название задачи..."
-                  autoFocus
-                />
-              </S.FormBlock>
 
-              <S.FormBlock>
-                <S.Label>Описание задачи</S.Label>
-                <S.TextArea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Введите описание задачи..."
-                  rows="5"
-                />
-              </S.FormBlock>
+            <S.ModalWrap>
+              <S.ModalForm onSubmit={handleSubmit}>
+                <S.FormBlock>
+                  <S.Label>Название задачи</S.Label>
+                  <S.Input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Введите название задачи..."
+                    autoFocus
+                  />
+                </S.FormBlock>
 
-              <S.CategoriesBlock>
-                <S.Label>Категория</S.Label>
-                <S.Categories>
-                  {categories.map((cat) => (
-                    <S.Category
-                      key={cat}
-                      $active={category === cat}
-                      $color={cat === 'Web Design' ? 'orange' : cat === 'Research' ? 'green' : 'purple'}
-                      onClick={() => setCategory(cat)}
-                    >
-                      {cat}
-                    </S.Category>
-                  ))}
-                </S.Categories>
-              </S.CategoriesBlock>
+                <S.FormBlock>
+                  <S.Label>Описание задачи</S.Label>
+                  <S.TextArea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Введите описание задачи..."
+                    rows="5"
+                  />
+                </S.FormBlock>
 
-              {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
+                <S.CategoriesBlock>
+                  <S.Label>Категория</S.Label>
+                  <S.Categories>
+                    {categories.map((cat) => (
+                      <S.Category
+                        key={cat}
+                        $active={category === cat}
+                        $color={
+                          cat === 'Web Design'
+                            ? 'orange'
+                            : cat === 'Research'
+                            ? 'green'
+                            : 'purple'
+                        }
+                        onClick={() => setCategory(cat)}
+                      >
+                        {cat}
+                      </S.Category>
+                    ))}
+                  </S.Categories>
+                </S.CategoriesBlock>
 
-              <S.ButtonGroup>
-                <S.ButtonCreate type="submit" disabled={isLoading}>
-                  {isLoading ? 'Создаём...' : 'Создать задачу'}
-                </S.ButtonCreate>
-                <S.ButtonCancel type="button" onClick={handleCancel}>
-                  Отмена
-                </S.ButtonCancel>
-              </S.ButtonGroup>
-            </S.ModalForm>
+                {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
+
+                <S.ButtonGroup>
+                  <S.ButtonCreate type="submit" disabled={isLoading}>
+                    {isLoading ? 'Создаём...' : 'Создать задачу'}
+                  </S.ButtonCreate>
+                  <S.ButtonCancel type="button" onClick={handleCancel}>
+                    Отмена
+                  </S.ButtonCancel>
+                </S.ButtonGroup>
+              </S.ModalForm>
+
+              <S.CalendarWrapper>
+                <Calendar selectedDate={dueDate} onChange={setDueDate} />
+              </S.CalendarWrapper>
+            </S.ModalWrap>
           </S.ModalContent>
         </S.ModalBlock>
       </S.Container>

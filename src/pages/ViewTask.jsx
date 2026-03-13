@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Header from '../components/Header/Header';
+import { formatRuDate } from '../components/Calendar/Calendar';
 import { useTasks } from '../contexts/TasksContext';
 import * as S from './ViewTask.styled';
 
@@ -131,7 +132,7 @@ function ViewTask() {
 
             <S.DateBlock>
               <S.Label>Дата</S.Label>
-              <S.Date>{task.date}</S.Date>
+              <S.Date>{formatRuDate(task.date)}</S.Date>
             </S.DateBlock>
 
             <S.ButtonGroup>

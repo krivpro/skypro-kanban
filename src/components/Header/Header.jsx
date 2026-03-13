@@ -28,7 +28,7 @@ function Header() {
           </S.Logo>
           <S.Nav>
             <S.ButtonMainNew id="btnMainNew">
-              <Link to="/task/new">Создать новую задачу</Link>
+              <Link to="/task/new">Создать новую</Link>
             </S.ButtonMainNew>
             <S.UserLink 
             href="#user-set-target"
@@ -62,7 +62,9 @@ function UserSettings({ isOpen, user }) {
       style={{ display: isOpen ? 'block' : 'none'}}
     >
       <p className="pop-user-set__name">{user?.name || 'Пользователь'}</p>
-      <p className="pop-user-set__mail">{user?.email || 'email@example.com'}</p>
+      <p className="pop-user-set__mail">
+        {user?.email || user?.login || 'email@example.com'}
+      </p>
       <div className="pop-user-set__theme">
         <p>Темная тема</p>
         <input
